@@ -1,0 +1,7 @@
+.spacer {
+    flex: 1 1 auto;
+}
+.text {
+    display: inline-block;
+    margin-left: 5px;
+}

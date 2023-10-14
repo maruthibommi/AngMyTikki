@@ -1,0 +1,96 @@
+<h1>Bill</h1>
+<h2>Customer Details</h2>
+<p>Name: {{ recievedFormData?.name || '...'}}</p>
+<p>Phone Number: {{ recievedFormData?.phoneNumber || '...'}}</p>
+<p>Village: {{ recievedFormData?.village || '...'}}</p>
+
+<h2>Bag Weight Data</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Variety</th>
+      <th>Rate Per KG</th>
+      <th>Total Bags</th>
+      <th>Weights</th>
+      <th>Gross Weight</th>
+      <th>Net Weight</th>
+      <th>Gross Amount</th>
+      <th>Per Bag Cost</th>
+      <th>Bags Cost</th>
+      <th>Net Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- You can use *ngFor to loop through your data and generate table rows -->
+    <tr *ngFor="let bagData of rows">
+      <td>{{ bagData.variety }}</td>
+      <td>{{ bagData.ratePerKG }}</td>
+      <td>{{ bagData.totalBags }}</td>
+      <td>{{ bagData.bagWeights }}</td>
+      <td>{{ bagData.grossWeight }}</td>
+      <td>{{ bagData.netWeight }}</td>
+      <td>{{ bagData.grossAmount }}</td>
+      <td>{{ bagData.perBagCost }}</td>
+      <td>{{ bagData.totalBagsCost }}</td>
+      <td>{{ bagData.netAmount }}</td>
+    </tr>
+    <tr>
+      <td>
+        Gross Total Amount 
+      </td>
+      <td colspan="9" style="text-align: center;">
+        {{ totalAmount }}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Deduction Table</h2>
+<form [formGroup] = "myForm">
+<table>
+  <thead>
+    <tr>
+      <th>Deduction Type</th>
+      <th>Per Bag</th>
+      <th>Deduction Amount</th>
+      <th>Total Bags</th>
+      <th>Total Deduction</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+ 
+  <tbody formArrayName="dataRows">
+    <tr *ngFor="let row of dataRows.controls; let i = index" [formGroupName]="i">
+      <td>
+        <select formControlName="deductionType">
+          <option value="Select an Option">Select a Variety</option>
+          <option value="Kiray">Kiray</option>
+          <option value="Machu">Machu</option>
+          <option value="Kharchu">Kharchu</option>
+          <option value="Others">Others</option>
+        </select>
+      </td>
+      <td>
+        <input type="checkbox" formControlName="perBag">
+      </td>
+      <td>
+        <input type="number" formControlName="deductionAmount">
+      </td>
+      <td *ngIf="row.get('perBag')?.value">
+        {{totalBag}}
+      </td>
+      <td>
+        {{ calculateTotalDeductionAmount(getRowFormGroup(i)) }}
+      </td>
+      <td>
+        <!-- Actions column -->
+        <button (click)="removeRow(i)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+  
+</table> 
+<button (click)="addRow()">Add Row</button>
+<button (click)="onSubmit()">Submit</button>
+</form> 

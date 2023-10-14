@@ -1,0 +1,227 @@
+<!-- <button mat-raised-button (click)="addColumn()"> Add Variety </button>
+<button mat-raised-button (click)="removeColumn()"> Remove column </button>
+<button mat-raised-button (click)="shuffle()"> Shuffle </button>
+
+<table mat-table [dataSource]="data" class="mat-elevation-z8">
+  <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+    <th mat-header-cell *matHeaderCellDef> {{column}} </th> -->
+    <!-- <td mat-cell *matCellDef="let element"> {{element[column]}} </td> -->
+  <!-- </ng-container> -->
+
+  <!-- <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr> -->
+  <!-- <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr> -->
+
+        <!-- <tr >
+            <td>
+                <select>
+                    <option value="Select a Variety">Select a Variety</option>
+                    <option value="Red">Red</option>
+                    <option value="Taal">Taal</option>
+                    <option value="Teja">Teja</option>
+                </select>
+            </td>
+        </tr>
+</table> -->
+
+
+<!-- <div>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Variety</th>
+            <th>Rate per KG</th>
+            <th>Bag Weight</th>
+            <th>Total Bags</th>
+            <th>Gross Weight</th>
+            <th>Per Bag Cost</th>
+            <th>Net Weight</th>
+            <th>Gross Amount</th>
+            <th>Total Bags Cost</th>
+            <th>Net Amount</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of rows; let index = index">
+            <td>
+              <select [(ngModel)]="row.variety">
+                <option value="Select a Variety">Select a Variety</option>
+                <option value="Red">Red</option>
+                <option value="Taal">Taal</option>
+                <option value="Teja">Teja</option>
+              </select>
+            </td>
+            <td>
+              <input type="number" [(ngModel)]="row.ratePerKG" />
+            </td>
+            <td>
+              <div *ngFor="let bagWeight of row.bagWeights; let bagWeightIndex = index">
+                <input type="number" [(ngModel)]="row.bagWeights[bagWeightIndex]" />
+                <input type="checkbox" [checked]="bagWeight > 45" disabled />
+                <input type="checkbox" [checked]="bagWeight > 50" disabled />
+                
+                <button class="button-remove" type="button" (click)="handleRemoveBagWeight(index, bagWeightIndex)">&times;</button>
+
+              </div>
+              <button class="button-container button" type="button" (click)="handleAddBagWeight(index)">Add Bag Weight</button>
+            </td>
+            <td>{{ calculateTotalBags(row.bagWeights) }}</td>
+            <td>{{ calculateGrossWeight(row.bagWeights) }}</td>
+            <td>
+              <input type="number" [(ngModel)]="row.perBagCost" />
+            </td>
+            <td>{{ calculateNetWeight(calculateGrossWeight(row.bagWeights), row.bagWeights) }}</td>
+            <td>
+              {{
+                calculateGrossAmount(
+                  calculateNetWeight(calculateGrossWeight(row.bagWeights), row.bagWeights),
+                  row.ratePerKG
+                )
+              }}
+            </td>
+            <td>{{ calculateTotalBagsCost(calculateTotalBags(row.bagWeights), row.perBagCost) }}</td>
+            <td>
+              {{
+                calculateNetAmount(
+                  calculateGrossAmount(
+                    calculateNetWeight(calculateGrossWeight(row.bagWeights), row.bagWeights),
+                    row.ratePerKG
+                  ),
+                  calculateTotalBags(row.bagWeights),
+                  row.perBagCost
+                )
+              }}
+            </td>
+            <td>
+              <button class="button-container button" type="button" (click)="handleRemoveRow(index)">Remove Variety</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="button-container button" type="button" (click)="handleAddRow()">Add Variety</button>
+    <button class="button-container button" type="button" (click)="onSubmit()">Submit</button>
+
+  </div> -->
+
+
+<h2>Variety Details Form</h2>
+  
+
+<div>
+  <div>
+    <form [formGroup]="validationForm">
+      <div class="input-container">
+        <div class="input-field">
+          <label for="name">Name:</label>
+          <input id="name" type="text" placeholder="Enter Name" formControlName="name">
+          <!-- Validation error message -->
+          <div *ngIf="validationForm.get('name')?.hasError('required') && validationForm.get('name')?.touched" class="error-message">
+            Name is required.
+          </div>
+        </div>
+        <div class="input-field">
+          <label for="phoneNumber">Phone Number:</label>
+          <input id="phoneNumber" type="tel" placeholder="Enter Phone Number" formControlName="phoneNumber">
+          <!-- Validation error messages -->
+          <div *ngIf="validationForm.get('phoneNumber')?.hasError('required') && validationForm.get('phoneNumber')?.touched" class="error-message">
+            Phone Number is required.
+          </div>
+          <div *ngIf="validationForm.get('phoneNumber')?.hasError('invalidPhoneNumber') && validationForm.get('phoneNumber')?.touched" class="error-message">
+            Invalid Phone Number.
+          </div>
+        </div>
+        <div class="input-field">
+          <label for="village">Village:</label>
+          <input id="village" type="text" placeholder="Enter Village" formControlName="village">
+          <!-- Validation error message -->
+          <div *ngIf="validationForm.get('village')?.hasError('required') && validationForm.get('village')?.touched" class="error-message">
+            Village is required.
+          </div>
+        </div>
+      </div>
+    </form>
+  
+  
+
+
+    
+    
+    
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Variety</th>
+            <th>Rate per KG</th>
+            <th>Bag Weight</th>
+            <th>Total Bags</th>
+            <th>Gross Weight</th>
+            <th>Per Bag Cost</th>
+            <th>Net Weight</th>
+            <th>Gross Amount</th>
+            <th>Total Bags Cost</th>
+            <th>Net Amount</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of rows; let rowIndex = index">
+            <td>
+              <select [(ngModel)]="row.variety" (change)="handleInputChange(rowIndex)">
+                <option value="Select a Variety">Select a Variety</option>
+                <option value="Red">Red</option>
+                <option value="Taal">Taal</option>
+                <option value="Teja">Teja</option>
+              </select>
+            </td>
+            <td>
+              <input
+                type="number"
+                [(ngModel)]="row.ratePerKG"
+                (change)="handleRateChange(rowIndex)"
+              />
+            </td>
+            <td>
+              <div *ngFor="let bagWeight of row.bagWeights; let bagWeightIndex = index">
+                <input
+                  type="number"
+                  [(ngModel)]="row.bagWeights[bagWeightIndex]"
+                  (change)="handleInputChange(rowIndex)"
+                />
+                <input type="checkbox" [checked]="bagWeight > 45" disabled />
+                <input type="checkbox" [checked]="bagWeight > 50" disabled />
+                <button class="button-remove" type="button" (click)="handleRemoveBagWeight(row, bagWeightIndex)">
+                  &times;
+                </button>
+              </div>
+              <button class="button-container button" type="button" (click)="handleAddBagWeight(row)">
+                Add Bag Weight
+              </button>
+            </td>
+            <td>{{ calculateTotalBags(row.bagWeights) }}</td>
+            <td>{{ calculateGrossWeight(row.bagWeights) }}</td>
+            <td>
+              <input
+                type="number"
+                [(ngModel)]="row.perBagCost"
+                (change)="handlePerBagCostChange(rowIndex)"
+              />
+            </td>
+            <td>{{ calculateNetWeight(row.grossWeight, row.bagWeights) }}</td>
+            <td>{{ calculateGrossAmount(calculateNetWeight(row.grossWeight, row.bagWeights), row.ratePerKG) }}</td>
+            <td>{{ calculateTotalBagsCost(calculateTotalBags(row.bagWeights), row.perBagCost) }}</td>
+            <td>{{ calculateNetAmount(calculateGrossAmount(calculateNetWeight(row.grossWeight, row.bagWeights), row.ratePerKG), calculateTotalBags(row.bagWeights), row.perBagCost) }}</td>
+            <td>
+              <button class="button-container button" type="button" (click)="handleRemoveRow(rowIndex)">Remove Variety</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="button-container button" type="button" (click)="handleAddRow()">Add Variety</button>
+    <button class="button-container button" type="button" (click)="onSubmit()">Submit</button>
+  
+  </div>
+  
